@@ -1,0 +1,96 @@
+// ORF-Konto style login card
+.login-konto-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto;
+
+  .konto-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+
+    .orf-logo .logo-box {
+      background: #1a1a1a;
+      color: #fff;
+      font-weight: 900;
+      font-size: 1rem;
+      padding: 2px 6px;
+      border-radius: 3px;
+      letter-spacing: 1px;
+    }
+
+    .konto-label {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: 2px;
+    }
+  }
+
+  .konto-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.35;
+    margin-bottom: 1rem;
+  }
+
+  .konto-text {
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+
+  .konto-divider {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 1.25rem 0;
+  }
+
+  .konto-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.75rem;
+    flex-wrap: wrap;
+
+    .btn-konto-primary {
+      background: #3d3d8f;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #2e2e6e;
+      }
+    }
+
+    .btn-konto-secondary {
+      background: transparent;
+      color: #3d3d8f;
+      border: 2px solid #3d3d8f;
+      border-radius: 6px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+
+      &:hover {
+        background: #3d3d8f;
+        color: #fff;
+      }
+    }
+  }
+}
+

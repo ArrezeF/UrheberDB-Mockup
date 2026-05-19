@@ -1,0 +1,135 @@
+.id-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: #fffbea;
+  border: 1px solid #f5c518;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+
+  .id-banner-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+
+    i { font-size: 1.4rem; color: #e2001a; margin-top: 2px; flex-shrink: 0; }
+    strong { display: block; color: #e2001a; font-size: 0.95rem; margin-bottom: 0.25rem; }
+    p { margin: 0; font-size: 0.85rem; color: #555; }
+  }
+
+  .id-banner-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+}
+
+.form-section-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.field label {
+  display: block;
+  font-size: 0.85rem;
+  color: #444;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.field {
+  margin-bottom: 1.25rem;
+}
+
+/* ===== Personalnummer-Box ===== */
+.personalnummer-box {
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.pnr-input-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.pnr-not-found {
+  margin-top: 0.85rem;
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: #795700;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  i { color: #e67700; font-size: 1rem; }
+}
+
+.pnr-found {
+  background: #ebfbee;
+  border: 1px solid #a8e6b0;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: #1a5c2a;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  i { color: #2f9e44; font-size: 1.2rem; flex-shrink: 0; }
+
+  div { flex: 1; line-height: 1.5; }
+}
+
+.pnr-skipped {
+  background: #f0f4ff;
+  border: 1px solid #c0ceff;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: #3b5bdb;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  i { font-size: 1rem; flex-shrink: 0; }
+}
+
+/* ===== Upload Area ===== */
+.upload-area {
+  border: 2px dashed #d0d0d0;
+  border-radius: 8px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  background: #fafafa;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    border-color: #e2001a;
+    background: #fff5f5;
+  }
+
+  &.upload-has-file {
+    border-color: #e2001a;
+    background: #fff5f5;
+  }
+}

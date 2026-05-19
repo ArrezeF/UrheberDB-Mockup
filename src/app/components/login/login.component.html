@@ -1,0 +1,44 @@
+<div class="login-page">
+
+  <!-- Login Content -->
+  <main class="login-content">
+    <div class="login-konto-card">
+
+      <!-- Brand -->
+      <div class="konto-brand">
+        <div class="orf-logo">
+          <span class="logo-box">ORF</span>
+        </div>
+        <span class="konto-label">KONTO</span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="konto-title">Urheberrechtsdatenbank-Login<br>ab sofort mit MediaKey!</h1>
+
+      <p class="konto-text">
+        Der ORF verwendet MediaKey, den gemeinsamen Login-Schlüssel
+        österreichischer Medien.
+      </p>
+
+      <div class="konto-divider"></div>
+
+      <p class="konto-text">
+        <strong>Sie haben bereits ein Login für das ORF-Kundenportal?</strong><br>
+        Melden Sie sich mit dieser E-Mail-Adresse im MediaKey an. Nur so werden
+        Ihre Daten automatisch übernommen.
+      </p>
+
+      <!-- Buttons -->
+      <div class="konto-actions">
+        <button class="btn-konto-primary" (click)="loginWithMediaKey()">
+          Anmelden mit MediaKey
+        </button>
+        <button class="btn-konto-secondary" routerLink="/welcome">
+          Weitere Informationen
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+</div>

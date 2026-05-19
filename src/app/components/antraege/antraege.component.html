@@ -1,0 +1,52 @@
+<div class="page-header">
+  <h1>Meine Anträge</h1>
+  <p>Übersicht aller eingereichten Anträge.</p>
+</div>
+
+<div class="page-card">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+    <h3 style="margin:0;font-size:1rem;color:#333">Anträge</h3>
+    <a routerLink="/antrag/neu">
+      <button pButton icon="pi pi-plus" label="Neuer Antrag" class="p-button-danger p-button-sm"></button>
+    </a>
+  </div>
+
+  <p-table [value]="antraege" [tableStyle]="{'min-width': '40rem'}" styleClass="p-datatable-sm">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Antrags-Nr.</th>
+        <th>Personenart</th>
+        <th>Eingereicht am</th>
+        <th>Status</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-a>
+      <tr>
+        <td><strong>{{ a.id }}</strong></td>
+        <td>
+          <i class="pi"
+             [class.pi-user]="a.personenart === 'Natürliche Person'"
+             [class.pi-building]="a.personenart === 'Juristische Person'"
+             style="margin-right:6px;color:#888"></i>
+          {{ a.personenart }}
+        </td>
+        <td>{{ a.eingereichtAm }}</td>
+        <td>
+          <p-tag value="In Bearbeitung" severity="info"></p-tag>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4" style="text-align:center;color:#aaa;padding:2.5rem">
+          <i class="pi pi-inbox" style="font-size:2rem;display:block;margin-bottom:0.5rem"></i>
+          Noch keine Anträge eingereicht.
+          <br><br>
+          <a routerLink="/antrag/neu">
+            <button pButton label="Jetzt Antrag stellen" icon="pi pi-plus" class="p-button-danger p-button-sm"></button>
+          </a>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

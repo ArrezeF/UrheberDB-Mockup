@@ -1,0 +1,131 @@
+<div class="mk-page">
+
+  <!-- ===== SCHRITT 1: E-Mail ===== -->
+  <div class="mk-card" *ngIf="step === 1">
+
+    <div class="mk-brand-logo" style="margin-bottom:1.75rem">
+      <div class="mk-brand-icon">
+        <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+          <path d="M4 36 L16 4 L24 20 L32 4 L36 36" stroke="#e2001a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <span class="mk-brand-text"><span>MEDIA</span>KEY</span>
+    </div>
+
+    <h1>Willkommen!</h1>
+    <p class="mk-subtitle">
+      MediaKey – Ihr zentrales Login für die Angebote<br>
+      und Inhalte österreichischer Medien.
+    </p>
+
+    <div class="mk-input-group">
+      <input
+        type="email"
+        [(ngModel)]="email"
+        placeholder="E-Mail-Adresse"
+        class="mk-input"
+        [class.mk-input-error]="emailError"
+        (keyup.enter)="weiter()"
+        (input)="emailError = false"
+        autocomplete="email"
+      />
+      <small class="mk-error-msg" *ngIf="emailError">Bitte geben Sie eine gültige E-Mail-Adresse ein.</small>
+    </div>
+
+    <button class="mk-btn" (click)="weiter()">WEITER</button>
+
+    <a class="mk-link" routerLink="/welcome">Konto erstellen</a>
+
+  </div>
+
+  <!-- ===== SCHRITT 2: Passwort ===== -->
+  <div class="mk-card" *ngIf="step === 2">
+
+    <div class="mk-brand-logo" style="margin-bottom:1.75rem">
+      <div class="mk-brand-icon">
+        <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+          <path d="M4 36 L16 4 L24 20 L32 4 L36 36" stroke="#e2001a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <span class="mk-brand-text"><span>MEDIA</span>KEY</span>
+    </div>
+
+    <h1>Anmeldung</h1>
+
+    <p class="mk-andere-email">
+      Möchten Sie sich mit einer
+      <a class="mk-link-inline" (click)="andereEmail()">anderen E-Mail-Adresse</a>
+      anmelden?
+    </p>
+
+    <!-- E-Mail (gesperrt) -->
+    <div class="mk-input-group">
+      <div class="mk-input-labeled">
+        <label class="mk-floating-label">E-Mail-Adresse</label>
+        <input
+          type="email"
+          [value]="email"
+          class="mk-input mk-input-readonly"
+          readonly
+        />
+      </div>
+    </div>
+
+    <!-- Passwort -->
+    <div class="mk-input-group">
+      <div class="mk-input-labeled mk-input-password-wrap">
+        <label class="mk-floating-label">Passwort</label>
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          [(ngModel)]="password"
+          class="mk-input"
+          [class.mk-input-error]="passwordError"
+          (keyup.enter)="anmelden()"
+          (input)="passwordError = false"
+          autocomplete="current-password"
+        />
+        <button class="mk-eye-btn" type="button" (click)="togglePassword()" tabindex="-1">
+          <svg *ngIf="!showPassword" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          <svg *ngIf="showPassword" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+            <line x1="1" y1="1" x2="23" y2="23"/>
+          </svg>
+        </button>
+      </div>
+      <small class="mk-error-msg" *ngIf="passwordError">Bitte geben Sie Ihr Passwort ein.</small>
+    </div>
+
+    <button class="mk-btn" (click)="anmelden()" [disabled]="loading">
+      <span *ngIf="loading" class="mk-spinner"></span>
+      {{ loading ? '' : 'ANMELDEN' }}
+    </button>
+
+    <a class="mk-link">Passwort vergessen?</a>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="mk-footer">
+    <nav class="mk-footer-nav">
+      <a>Über MediaKey</a>
+      <a>FAQ</a>
+      <a>Impressum</a>
+      <a>Nutzungsbedingungen</a>
+      <a>Datenschutzerklärung</a>
+    </nav>
+    <p class="mk-footer-cookie">
+      Wir setzen ausschließlich technisch notwendige Cookies ein, weitere<br>
+      Infos finden Sie in der Datenschutzerklärung.
+    </p>
+    <div class="mk-footer-icon">
+      <svg width="22" height="22" viewBox="0 0 40 40" fill="none">
+        <path d="M4 36 L16 4 L24 20 L32 4 L36 36" stroke="#ccc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+  </footer>
+
+</div>
