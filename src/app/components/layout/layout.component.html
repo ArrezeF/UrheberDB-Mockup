@@ -15,6 +15,9 @@
       <span *ngIf="auth.isVerified()" style="font-size:0.85rem;color:#555;font-weight:500">
         {{ auth.currentUser()?.name }}
       </span>
+      <span *ngIf="auth.currentUser()" style="font-size:0.85rem;color:#555;">
+        {{ auth.currentUser()?.email }}
+      </span>
       <button
         pButton
         icon="pi pi-sign-out"

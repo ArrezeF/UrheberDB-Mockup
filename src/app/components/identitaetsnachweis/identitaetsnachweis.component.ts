@@ -16,6 +16,7 @@ import { AuthService } from '../../services/auth.service';
 export class IdentitaetsnachweisComponent {
   activeMethod: 'none' | 'reisepass' = 'none';
   submitted = false;
+  eingereicht = false;
 
   vorname = '';
   nachname = '';
@@ -60,8 +61,12 @@ export class IdentitaetsnachweisComponent {
   bestaetigen(): void {
     this.submitted = true;
     if (!this.formValid) return;
-    this.auth.markVerified();
-    this.router.navigate(['/antrag/neu']);
+    this.auth.submitPassportVerification();
+    this.eingereicht = true;
+  }
+
+  weiterZuAntraegen(): void {
+    this.router.navigate(['/antraege']);
   }
 
   abbrechen(): void {

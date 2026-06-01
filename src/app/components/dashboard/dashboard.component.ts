@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { TabViewModule } from 'primeng/tabview';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { AuthService } from '../../services/auth.service';
@@ -23,14 +22,17 @@ export interface RadioProduktion {
   id: string; titel: string; sender: string;
   datum: string; uhrzeit: string; dauer: string; jahr: number;
 }
-export interface GruppierteTv { titel: string; sender: string; count: number; expanded: boolean; ausstrahlung: Produktion[]; }
-export interface GruppierteOnline { titel: string; plattform: string; count: number; expanded: boolean; ausstrahlung: OnlineProduktion[]; }
-export interface GruppierteRadio { titel: string; sender: string; count: number; expanded: boolean; ausstrahlung: RadioProduktion[]; }
+export interface KombinierteGruppe {
+  titel: string;
+  tv: Produktion[];
+  online: OnlineProduktion[];
+  radio: RadioProduktion[];
+}
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, ButtonModule, TableModule, TagModule, TabViewModule, InputTextModule, DropdownModule],
+  imports: [CommonModule, FormsModule, RouterModule, ButtonModule, TableModule, TagModule, InputTextModule, DropdownModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
@@ -94,46 +96,30 @@ export class DashboardComponent {
     );
   }
 
-  get tvGruppen(): GruppierteTv[] {
-    const filtered = this.filterTv(this.tvProduktionen);
-    const map = new Map<string, GruppierteTv>();
-    for (const p of filtered) {
-      if (!map.has(p.titel)) map.set(p.titel, { titel: p.titel, sender: p.sender, count: 0, expanded: false, ausstrahlung: [] });
-      const g = map.get(p.titel)!; g.count++; g.ausstrahlung.push(p);
-    }
-    return Array.from(map.values());
-  }
-  get onlineGruppen(): GruppierteOnline[] {
-    const filtered = this.filterOnline(this.onlineProduktionen);
-    const map = new Map<string, GruppierteOnline>();
-    for (const p of filtered) {
-      if (!map.has(p.titel)) map.set(p.titel, { titel: p.titel, plattform: p.plattform, count: 0, expanded: false, ausstrahlung: [] });
-      const g = map.get(p.titel)!; g.count++; g.ausstrahlung.push(p);
-    }
-    return Array.from(map.values());
-  }
-  get radioGruppen(): GruppierteRadio[] {
-    const filtered = this.filterRadio(this.radioProduktionen);
-    const map = new Map<string, GruppierteRadio>();
-    for (const p of filtered) {
-      if (!map.has(p.titel)) map.set(p.titel, { titel: p.titel, sender: p.sender, count: 0, expanded: false, ausstrahlung: [] });
-      const g = map.get(p.titel)!; g.count++; g.ausstrahlung.push(p);
-    }
+  get kombinierteGruppen(): KombinierteGruppe[] {
+    const map = new Map<string, KombinierteGruppe>();
+    const ensure = (titel: string) => {
+      if (!map.has(titel)) map.set(titel, { titel, tv: [], online: [], radio: [] });
+      return map.get(titel)!;
+    };
+    for (const p of this.filterTv(this.tvProduktionen)) ensure(p.titel).tv.push(p);
+    for (const p of this.filterOnline(this.onlineProduktionen)) ensure(p.titel).online.push(p);
+    for (const p of this.filterRadio(this.radioProduktionen)) ensure(p.titel).radio.push(p);
     return Array.from(map.values());
   }
 
-  expandedTv = new Set<string>();
-  expandedOnline = new Set<string>();
-  expandedRadio = new Set<string>();
+  expandedKombiniert = new Map<string, Set<'tv' | 'online' | 'radio'>>();
 
-  toggleTv(g: GruppierteTv): void { this.expandedTv.has(g.titel) ? this.expandedTv.delete(g.titel) : this.expandedTv.add(g.titel); }
-  toggleOnline(g: GruppierteOnline): void { this.expandedOnline.has(g.titel) ? this.expandedOnline.delete(g.titel) : this.expandedOnline.add(g.titel); }
-  toggleRadio(g: GruppierteRadio): void { this.expandedRadio.has(g.titel) ? this.expandedRadio.delete(g.titel) : this.expandedRadio.add(g.titel); }
+  toggleMedium(titel: string, medium: 'tv' | 'online' | 'radio'): void {
+    if (!this.expandedKombiniert.has(titel)) this.expandedKombiniert.set(titel, new Set());
+    const set = this.expandedKombiniert.get(titel)!;
+    set.has(medium) ? set.delete(medium) : set.add(medium);
+    this.expandedKombiniert = new Map(this.expandedKombiniert);
+  }
 
-  get tvGesamt(): number { return this.filterTv(this.tvProduktionen).length; }
-  get onlineGesamt(): number { return this.filterOnline(this.onlineProduktionen).length; }
-  get radioGesamt(): number { return this.filterRadio(this.radioProduktionen).length; }
-  get alleGesamt(): number { return this.tvGesamt + this.onlineGesamt + this.radioGesamt; }
+  isMediumExpanded(titel: string, medium: 'tv' | 'online' | 'radio'): boolean {
+    return this.expandedKombiniert.get(titel)?.has(medium) ?? false;
+  }
 
   get jurAntraegeOptionen(): { label: string; value: string }[] {
     return this.antragService.getJurAntraege().map(a => ({

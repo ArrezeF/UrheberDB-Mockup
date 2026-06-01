@@ -18,6 +18,7 @@ export class AuthService {
   // Reaktive Signals
   readonly isVerified = signal<boolean>(false);
   readonly currentUser = signal<AuthUser | null>(null);
+  readonly identityPending = signal<boolean>(false);
 
   get isLoggedIn(): boolean {
     return !!this.currentUser();
@@ -25,7 +26,12 @@ export class AuthService {
 
   markVerified(): void {
     this.isVerified.set(true);
+    this.identityPending.set(false);
     this.antragService.clearPersonType();
+  }
+
+  submitPassportVerification(): void {
+    this.identityPending.set(true);
   }
 
   /** Simulates a MediaKey login (replace with real SSO redirect in production) */
@@ -47,6 +53,7 @@ export class AuthService {
     sessionStorage.removeItem(this.SESSION_KEY);
     this.currentUser.set(null);
     this.isVerified.set(false);
+    this.identityPending.set(false);
     this.antragService.clearPersonType();
     this.router.navigate(['/welcome']);
   }

@@ -1,3 +1,32 @@
+.pending-card {
+  text-align: center;
+  padding: 2.5rem 2rem;
+
+  .pending-icon {
+    width: 72px;
+    height: 72px;
+    background: #fff8e1;
+    border: 2px solid #ffe082;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+
+    i { font-size: 2rem; color: #f59e0b; }
+  }
+
+  h3 { margin: 0 0 1rem; color: #1a1a1a; font-size: 1.2rem; }
+
+  p {
+    color: #555;
+    font-size: 0.9rem;
+    margin: 0 auto 0.75rem;
+    max-width: 520px;
+    line-height: 1.6;
+  }
+}
+
 .method-header {
   display: flex;
   align-items: flex-start;

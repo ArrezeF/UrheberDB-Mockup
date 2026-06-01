@@ -3,12 +3,29 @@
   <p>Übersicht aller eingereichten Anträge.</p>
 </div>
 
+<!-- Identitätsprüfung ausstehend -->
+<div class="id-pending-banner" *ngIf="auth.identityPending() && !auth.isVerified()">
+  <div class="id-pending-left">
+    <i class="pi pi-clock"></i>
+    <div>
+      <strong>Identitätsnachweis wird geprüft</strong>
+      <p>
+        Ihr Reisepass / Personalausweis wurde eingereicht und wird derzeit durch den ORF überprüft.
+        Sobald Ihre Identität bestätigt wurde, können Sie hier eine <strong>Freischaltung beantragen</strong>.
+      </p>
+    </div>
+  </div>
+</div>
+
 <div class="page-card">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
     <h3 style="margin:0;font-size:1rem;color:#333">Anträge</h3>
-    <a routerLink="/antrag/neu">
-      <button pButton icon="pi pi-plus" label="Neuer Antrag" class="p-button-danger p-button-sm"></button>
+    <a routerLink="/antrag/neu" *ngIf="auth.isVerified()">
+      <button pButton icon="pi pi-plus" label="Freischaltung beantragen" class="p-button-danger p-button-sm"></button>
     </a>
+    <button *ngIf="!auth.isVerified()" pButton icon="pi pi-lock" label="Freischaltung beantragen"
+      class="p-button-secondary p-button-sm" [disabled]="true"
+      pTooltip="Erst nach Bestätigung Ihres Identitätsnachweises verfügbar" tooltipPosition="left"></button>
   </div>
 
   <p-table [value]="antraege" [tableStyle]="{'min-width': '40rem'}" styleClass="p-datatable-sm">
@@ -42,9 +59,14 @@
           <i class="pi pi-inbox" style="font-size:2rem;display:block;margin-bottom:0.5rem"></i>
           Noch keine Anträge eingereicht.
           <br><br>
-          <a routerLink="/antrag/neu">
-            <button pButton label="Jetzt Antrag stellen" icon="pi pi-plus" class="p-button-danger p-button-sm"></button>
-          </a>
+          <ng-container *ngIf="auth.isVerified()">
+            <a routerLink="/antrag/neu">
+              <button pButton label="Freischaltung beantragen" icon="pi pi-plus" class="p-button-danger p-button-sm"></button>
+            </a>
+          </ng-container>
+          <ng-container *ngIf="!auth.isVerified() && auth.identityPending()">
+            <p style="color:#888;font-size:0.85rem;margin-top:0.5rem">Ihr Identitätsnachweis wird noch geprüft.</p>
+          </ng-container>
         </td>
       </tr>
     </ng-template>

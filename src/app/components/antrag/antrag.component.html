@@ -24,11 +24,10 @@
 <div class="page-card" *ngIf="step === 1">
   <h3 style="margin:0 0 0.5rem;font-size:1.05rem;color:#333">
     <i class="pi pi-info-circle" style="color:#e2001a;margin-right:8px"></i>
-    Schritt 1 von 3 – Personenart wählen
+    Schritt 1 von 3 – Für wen möchten Sie Auskunft erhalten?
   </h3>
   <p style="color:#888;font-size:0.85rem;margin:0 0 1.5rem">
-    Um Auskunft über die Nutzung Ihrer Werke zu erhalten, müssen Sie einen Antrag erstellen.
-    Bitte wählen Sie die Art der Person.
+    Bitte wählen Sie, in wessen Namen Sie Auskunft über die Nutzung von Werken beantragen.
   </p>
 
   <div class="type-selector">
@@ -40,8 +39,8 @@
       (click)="selectType('natuerlich')"
     >
       <i class="pi pi-user"></i>
-      <h3>Natürliche Person</h3>
-      <p>Einzelperson, z.B. ein Autor, Komponist, Fotograf oder sonstiger Urheber</p>
+      <h3>Ich beantrage Auskunft für mich selbst</h3>
+      <p>Für natürliche Personen – z. B. Autor*innen, Komponist*innen, Fotograf*innen, Einzelunternehmer*innen ohne Gewerbeschein</p>
     </div>
 
     <!-- Juristische Person -->
@@ -51,8 +50,8 @@
       (click)="selectType('juristisch')"
     >
       <i class="pi pi-building"></i>
-      <h3>Juristische Person</h3>
-      <p>Unternehmen, Verein oder sonstige Organisation mit eigener Rechtspersönlichkeit</p>
+      <h3>Ich beantrage Auskunft für ein Unternehmen / eine Organisation</h3>
+      <p>Für Unternehmen, Vereine oder sonstige Organisationen mit eigener Rechtspersönlichkeit</p>
     </div>
 
   </div>

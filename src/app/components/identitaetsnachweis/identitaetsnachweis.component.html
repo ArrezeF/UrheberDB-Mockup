@@ -1,8 +1,29 @@
 <!-- Page Header -->
 <div class="page-header">
   <h1>Identitätsnachweis</h1>
-  <p>Verifizieren Sie Ihre Identität, um das ORF-Urheberrechtssystem nutzen zu können.</p>
+  <p>Bitte verifizieren Sie Ihre Identität, um Zugriff auf die ORD – ORF Reporting Database zu erhalten.</p>
 </div>
+
+<!-- ===== BESTÄTIGUNGSANSICHT nach Einreichung ===== -->
+<div class="page-card pending-card" *ngIf="eingereicht">
+  <div class="pending-icon">
+    <i class="pi pi-clock"></i>
+  </div>
+  <h3>Nachweis eingereicht – wird geprüft</h3>
+  <p>
+    Ihr Identitätsnachweis (Reisepass / Personalausweis) wurde erfolgreich übermittelt und
+    wird nun durch den ORF geprüft. Dieser Vorgang kann einige Werktage in Anspruch nehmen.
+  </p>
+  <p>
+    <strong>Sobald Ihre Identität bestätigt wurde</strong>, erhalten Sie eine Benachrichtigung
+    und können unter <em>Meine Anträge</em> eine Freischaltung beantragen.
+  </p>
+  <button pButton label="Zu Meine Anträge" icon="pi pi-list" iconPos="right"
+    class="p-button-danger" (click)="weiterZuAntraegen()" style="margin-top:1rem"></button>
+</div>
+
+<!-- ===== FORMULAR (solange noch nicht eingereicht) ===== -->
+<ng-container *ngIf="!eingereicht">
 
 <!-- Method Selection Card -->
 <div class="page-card">
@@ -111,3 +132,5 @@
     <button pButton label="Identität bestätigen" icon="pi pi-check" iconPos="right" class="p-button-danger" (click)="bestaetigen()"></button>
   </div>
 </div>
+
+</ng-container>
