@@ -45,6 +45,12 @@ body {
     align-items: center;
     gap: 1.5rem;
 
+    .orf-logo-img {
+      height: 36px;
+      width: auto;
+      display: block;
+    }
+
     .orf-logo {
       display: flex;
       align-items: center;
