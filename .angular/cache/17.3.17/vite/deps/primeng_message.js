@@ -5,14 +5,14 @@ import {
   BaseIcon
 } from "./chunk-TFUAF22U.js";
 import {
+  UniqueComponentId
+} from "./chunk-NOHF2CCM.js";
+import {
   CommonModule,
   NgClass,
   NgIf,
   NgStyle
 } from "./chunk-ZQGI3ZYG.js";
-import {
-  UniqueComponentId
-} from "./chunk-NOHF2CCM.js";
 import {
   ChangeDetectionStrategy,
   Component,

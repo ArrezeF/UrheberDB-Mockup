@@ -5,12 +5,12 @@ import {
   DomHandler
 } from "./chunk-JZQAVOZS.js";
 import {
+  UniqueComponentId
+} from "./chunk-NOHF2CCM.js";
+import {
   DOCUMENT,
   isPlatformBrowser
 } from "./chunk-ZQGI3ZYG.js";
-import {
-  UniqueComponentId
-} from "./chunk-NOHF2CCM.js";
 import {
   Component,
   Directive,
@@ -207,4 +207,4 @@ export {
   AutoFocusModule,
   SpinnerIcon
 };
-//# sourceMappingURL=chunk-URS2XVJC.js.map
+//# sourceMappingURL=chunk-HSTYZ4QI.js.map

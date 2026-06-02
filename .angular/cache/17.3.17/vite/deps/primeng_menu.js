@@ -1,39 +1,29 @@
 import {
+  Tooltip,
+  TooltipModule
+} from "./chunk-JFRRJJLR.js";
+import {
   animate,
   style,
   transition,
   trigger
 } from "./chunk-IT763X4J.js";
 import {
-  Ripple,
-  RippleModule
-} from "./chunk-K2KESRUE.js";
-import {
   RouterLink,
   RouterLinkActive,
   RouterModule
 } from "./chunk-WV4JK4P7.js";
 import {
-  Tooltip,
-  TooltipModule
-} from "./chunk-D3ESBFTP.js";
-import {
   DomSanitizer
 } from "./chunk-XQC5PYM5.js";
+import {
+  Ripple,
+  RippleModule
+} from "./chunk-D5VUWHIH.js";
 import {
   ConnectedOverlayScrollHandler,
   DomHandler
 } from "./chunk-JZQAVOZS.js";
-import {
-  CommonModule,
-  DOCUMENT,
-  NgClass,
-  NgForOf,
-  NgIf,
-  NgStyle,
-  NgTemplateOutlet,
-  isPlatformBrowser
-} from "./chunk-ZQGI3ZYG.js";
 import {
   OverlayService,
   PrimeNGConfig,
@@ -44,6 +34,16 @@ import {
   UniqueComponentId,
   zindexutils
 } from "./chunk-NOHF2CCM.js";
+import {
+  CommonModule,
+  DOCUMENT,
+  NgClass,
+  NgForOf,
+  NgIf,
+  NgStyle,
+  NgTemplateOutlet,
+  isPlatformBrowser
+} from "./chunk-ZQGI3ZYG.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,

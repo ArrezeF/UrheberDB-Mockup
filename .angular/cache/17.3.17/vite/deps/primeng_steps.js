@@ -1,18 +1,20 @@
 import {
+  Tooltip,
+  TooltipModule
+} from "./chunk-JFRRJJLR.js";
+import {
   ActivatedRoute,
   Router,
   RouterLink,
   RouterLinkActive,
   RouterModule
 } from "./chunk-WV4JK4P7.js";
-import {
-  Tooltip,
-  TooltipModule
-} from "./chunk-D3ESBFTP.js";
 import "./chunk-XQC5PYM5.js";
 import {
   DomHandler
 } from "./chunk-JZQAVOZS.js";
+import "./chunk-4RTDEJXG.js";
+import "./chunk-NOHF2CCM.js";
 import {
   CommonModule,
   NgClass,
@@ -20,8 +22,6 @@ import {
   NgIf,
   NgStyle
 } from "./chunk-ZQGI3ZYG.js";
-import "./chunk-4RTDEJXG.js";
-import "./chunk-NOHF2CCM.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,

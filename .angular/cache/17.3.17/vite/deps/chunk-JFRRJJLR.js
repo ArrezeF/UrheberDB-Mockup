@@ -3,16 +3,16 @@ import {
   DomHandler
 } from "./chunk-JZQAVOZS.js";
 import {
-  CommonModule,
-  isPlatformBrowser
-} from "./chunk-ZQGI3ZYG.js";
-import {
   PrimeNGConfig
 } from "./chunk-4RTDEJXG.js";
 import {
   UniqueComponentId,
   zindexutils
 } from "./chunk-NOHF2CCM.js";
+import {
+  CommonModule,
+  isPlatformBrowser
+} from "./chunk-ZQGI3ZYG.js";
 import {
   Directive,
   ElementRef,
@@ -868,4 +868,4 @@ export {
   Tooltip,
   TooltipModule
 };
-//# sourceMappingURL=chunk-D3ESBFTP.js.map
+//# sourceMappingURL=chunk-JFRRJJLR.js.map
