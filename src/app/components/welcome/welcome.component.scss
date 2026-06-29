@@ -1,0 +1,237 @@
+.welcome-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ===== HERO ===== */
+.welcome-hero {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d0008 60%, #3d0010 100%);
+  color: #fff;
+  padding: 5rem 4rem 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  min-height: 520px;
+
+  .hero-content {
+    flex: 1;
+    max-width: 580px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(226, 0, 26, 0.2);
+    border: 1px solid rgba(226, 0, 26, 0.4);
+    color: #ff6b7a;
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2.8rem;
+    font-weight: 900;
+    line-height: 1.15;
+    margin: 0 0 1.25rem;
+    color: #fff;
+
+    span {
+      color: #e2001a;
+    }
+  }
+
+  p {
+    font-size: 1.05rem;
+    color: #bbb;
+    line-height: 1.7;
+    margin: 0 0 2rem;
+    max-width: 480px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-btn-primary {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+  }
+
+  .hero-btn-secondary {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-color: rgba(255,255,255,0.3);
+    color: #fff;
+
+    &:hover {
+      background: rgba(255,255,255,0.1);
+    }
+  }
+
+  /* Mockup visual */
+  .hero-visual {
+    flex-shrink: 0;
+
+    .hero-card-mock {
+      width: 360px;
+      height: 240px;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      opacity: 0.92;
+
+      .mock-topbar {
+        height: 36px;
+        background: #e2001a;
+        flex-shrink: 0;
+      }
+
+      .mock-sidebar {
+        display: flex;
+        flex-direction: column;
+        width: 72px;
+        background: #222;
+        gap: 8px;
+        padding: 12px 10px;
+        flex-shrink: 0;
+        position: absolute;
+        height: 204px;
+        margin-top: 36px;
+
+        .mock-item {
+          height: 8px;
+          border-radius: 4px;
+          background: #444;
+
+          &.active {
+            background: #e2001a;
+          }
+        }
+      }
+
+      .mock-content {
+        flex: 1;
+        margin-left: 72px;
+        padding: 12px;
+        margin-top: 36px;
+
+        .mock-stat-row {
+          display: flex;
+          gap: 8px;
+          margin-bottom: 14px;
+
+          .mock-stat {
+            height: 40px;
+            flex: 1;
+            border-radius: 6px;
+            opacity: 0.7;
+
+            &.red { background: #ffecee; border: 1px solid #ffc0c7; }
+            &.blue { background: #eef3ff; border: 1px solid #c0ceff; }
+            &.green { background: #ebfbee; border: 1px solid #a8e6b0; }
+          }
+        }
+
+        .mock-table-row {
+          height: 10px;
+          background: #f0f0f0;
+          border-radius: 4px;
+          margin-bottom: 8px;
+
+          &.short { width: 65%; }
+        }
+      }
+    }
+  }
+}
+
+/* ===== HOW IT WORKS ===== */
+.welcome-steps {
+  padding: 4rem;
+  background: #fff;
+  text-align: center;
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 2.5rem;
+  }
+
+  .steps-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .step-item {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+    padding: 0 1rem;
+
+    .step-number {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #e2001a;
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.75rem;
+    }
+
+    h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 0 0 0.3rem;
+    }
+
+    p {
+      font-size: 0.8rem;
+      color: #888;
+      margin: 0;
+      line-height: 1.4;
+    }
+  }
+
+  .step-arrow {
+    color: #ccc;
+    font-size: 1.2rem;
+    padding: 0 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Topbar nav anmelden button */
+.btn-nav-login {
+  background: var(--orf-red) !important;
+  color: #fff !important;
+  border-radius: 4px;
+  padding: 0.4rem 1rem !important;
+  font-weight: 600 !important;
+
+  &:hover {
+    background: #c0001a !important;
+  }
+}

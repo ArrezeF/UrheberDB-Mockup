@@ -1,0 +1,113 @@
+<!-- Page Header -->
+<div class="page-header">
+  <h1>Identitätsnachweis</h1>
+  <p>Verifizieren Sie Ihre Identität, um das ORF-Urheberrechtssystem nutzen zu können.</p>
+</div>
+
+<!-- Method Selection Card -->
+<div class="page-card">
+  <div class="method-header">
+    <i class="pi pi-shield method-icon"></i>
+    <div>
+      <h3>Identitätsnachweis erforderlich</h3>
+      <p>Wählen Sie, wie Sie Ihre Identität nachweisen möchten.</p>
+    </div>
+  </div>
+
+  <!-- ID-Austria Option -->
+  <div class="method-option" [class.active]="activeMethod === 'none'" (click)="mitIdAustria()">
+    <div class="method-option-left">
+      <div class="method-avatar id-austria">A</div>
+      <div>
+        <strong>Mit ID-Austria verifizieren</strong>
+        <p>Nutzen Sie Ihre digitale Identität über das offizielle staatliche System.</p>
+      </div>
+    </div>
+    <i class="pi pi-external-link"></i>
+  </div>
+
+  <!-- Reisepass / Personalausweis Option -->
+  <div class="method-option" [class.active]="activeMethod === 'reisepass'" (click)="selectReisepass()">
+    <div class="method-option-left">
+      <div class="method-avatar passport"><i class="pi pi-id-card"></i></div>
+      <div>
+        <strong>Reisepass / Personalausweis</strong>
+        <p>Laden Sie ein Foto Ihres Ausweisdokuments hoch und geben Sie die Dokumentdaten ein.</p>
+      </div>
+    </div>
+    <i class="pi pi-chevron-down" [class.pi-chevron-up]="activeMethod === 'reisepass'"></i>
+  </div>
+</div>
+
+<!-- Reisepass Form -->
+<div class="page-card form-card" *ngIf="activeMethod === 'reisepass'">
+  <div class="form-header">
+    <i class="pi pi-id-card" style="color:#e2001a;margin-right:8px"></i>
+    <div>
+      <h3>Angaben zum Ausweisdokument</h3>
+      <p>Bitte füllen Sie alle Pflichtfelder (*) aus.</p>
+    </div>
+  </div>
+
+  <div class="form-grid">
+    <!-- Vorname -->
+    <div class="form-field">
+      <label>Vorname *</label>
+      <input pInputText [(ngModel)]="vorname" placeholder="z.B. Maria"
+        [class.ng-invalid]="submitted && !vorname.trim()"
+        [class.ng-dirty]="submitted && !vorname.trim()" />
+      <small class="p-error" *ngIf="submitted && !vorname.trim()">Pflichtfeld</small>
+    </div>
+
+    <!-- Nachname -->
+    <div class="form-field">
+      <label>Nachname *</label>
+      <input pInputText [(ngModel)]="nachname" placeholder="z.B. Musterfrau"
+        [class.ng-invalid]="submitted && !nachname.trim()"
+        [class.ng-dirty]="submitted && !nachname.trim()" />
+      <small class="p-error" *ngIf="submitted && !nachname.trim()">Pflichtfeld</small>
+    </div>
+
+    <!-- Dokumentnummer -->
+    <div class="form-field">
+      <label>Dokumentnummer *</label>
+      <input pInputText [(ngModel)]="dokumentnummer" placeholder="Z.B. K1234567"
+        [class.ng-invalid]="submitted && !dokumentnummer.trim()"
+        [class.ng-dirty]="submitted && !dokumentnummer.trim()" />
+      <small class="p-error" *ngIf="submitted && !dokumentnummer.trim()">Pflichtfeld</small>
+
+      <!-- MRZ Hint -->
+      <div class="mrz-hint">
+        <div class="mrz-hint-header">
+          <i class="pi pi-info-circle"></i>
+          <span>Die Dokumentnummer finden Sie in der <strong>2. Zeile der Maschinenlesbaren Zone (MRZ)</strong> – Zeichen 1–9.</span>
+        </div>
+        <div class="mrz-box">
+          <div class="mrz-line">PTAUMUSTERFRAU&lt;&lt;MARIA&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
+          <div class="mrz-line"><span class="mrz-highlight">K1234567</span>&lt;6XXB8112314F1903290&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;6</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Datei-Upload -->
+    <div class="form-field">
+      <label>Reisepass / Personalausweis hochladen *</label>
+      <div class="file-upload-area" [class.has-file]="dokumentFile" [class.error]="submitted && !dokumentFile">
+        <label class="file-upload-label">
+          <i class="pi pi-upload"></i>
+          <span *ngIf="!dokumentFile">Datei auswählen (PDF, JPG, PNG)</span>
+          <span *ngIf="dokumentFile" class="file-name"><i class="pi pi-check-circle"></i> {{ dokumentFile.name }}</span>
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png" (change)="onFileChange($event)" style="display:none" />
+        </label>
+      </div>
+      <small class="p-error" *ngIf="submitted && !dokumentFile">Bitte laden Sie ein Dokument hoch.</small>
+      <small class="p-error" *ngIf="fileError">Nur PDF, JPG oder PNG erlaubt.</small>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="form-actions">
+    <button pButton label="Abbrechen" icon="pi pi-arrow-left" class="p-button-text p-button-secondary" (click)="abbrechen()"></button>
+    <button pButton label="Identität bestätigen" icon="pi pi-check" iconPos="right" class="p-button-danger" (click)="bestaetigen()"></button>
+  </div>
+</div>

@@ -1,0 +1,473 @@
+.mk-page {
+  min-height: 100vh;
+  background: #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 48px 16px 24px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* ===== CARD ===== */
+.mk-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2.5rem 2rem 2rem;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+}
+
+/* ===== MEDIAKEY BRAND LOGO ===== */
+.mk-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .mk-brand-icon {
+    display: flex;
+    align-items: center;
+  }
+
+  .mk-brand-text {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #1a1a1a;
+    letter-spacing: 2px;
+
+    span {
+      color: #e2001a;
+    }
+  }
+}
+
+/* ===== HEADINGS ===== */
+h1 {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin: 0 0 0.75rem;
+}
+
+.mk-subtitle {
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0 0 1.75rem;
+}
+
+.mk-andere-email {
+  color: #555;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin: 0 0 1.5rem;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.mk-link-inline {
+  color: #e2001a;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* ===== INPUTS ===== */
+.mk-input-group {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.mk-input-labeled {
+  position: relative;
+  width: 100%;
+}
+
+.mk-floating-label {
+  position: absolute;
+  top: -9px;
+  left: 12px;
+  background: #fff;
+  padding: 0 4px;
+  font-size: 0.75rem;
+  color: #888;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mk-input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: #aaa;
+  }
+
+  &:focus {
+    border-color: #e2001a;
+  }
+
+  &.mk-input-error {
+    border-color: #e2001a;
+    background: #fff8f8;
+  }
+
+  &.mk-input-readonly {
+    background: #f5f5f5;
+    color: #555;
+    cursor: default;
+    border-color: #ddd;
+  }
+}
+
+.mk-input-password-wrap {
+  .mk-input {
+    padding-right: 3rem;
+  }
+}
+
+.mk-eye-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  color: #888;
+
+  &:hover svg {
+    stroke: #555;
+  }
+}
+
+.mk-error-msg {
+  display: block;
+  color: #e2001a;
+  font-size: 0.78rem;
+  margin-top: 5px;
+  text-align: left;
+}
+
+/* ===== BUTTON ===== */
+.mk-btn {
+  width: 100%;
+  background: #e2001a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+
+  &:hover:not(:disabled) {
+    background: #c0001a;
+  }
+
+  &:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
+}
+
+.mk-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== LINKS ===== */
+.mk-link {
+  color: #e2001a;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+
+  &:hover {
+    color: #c0001a;
+  }
+}
+
+/* ===== FOOTER ===== */
+.mk-footer {
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+
+  .mk-footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.75rem;
+
+    a {
+      color: #555;
+      font-size: 0.8rem;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover { text-decoration: underline; }
+    }
+  }
+
+  .mk-footer-cookie {
+    color: #888;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    margin: 0 0 1rem;
+  }
+
+  .mk-footer-icon {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+/* ===== LOGIN CARD ===== */
+.mk-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2.5rem 2rem 2rem;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  margin-bottom: 12px;
+}
+
+/* ORF Logo */
+.mk-orf-logo {
+  margin-bottom: 1.5rem;
+
+  .orf-box {
+    background: #e2001a;
+    color: #fff;
+    font-weight: 900;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    padding: 10px 22px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin: 0 0 0.75rem;
+}
+
+.mk-subtitle {
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0 0 1.75rem;
+}
+
+/* Input */
+.mk-input-group {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.mk-input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: #aaa;
+  }
+
+  &:focus {
+    border-color: #e2001a;
+  }
+
+  &.mk-input-error {
+    border-color: #e2001a;
+    background: #fff8f8;
+  }
+}
+
+.mk-error-msg {
+  display: block;
+  color: #e2001a;
+  font-size: 0.78rem;
+  margin-top: 5px;
+  text-align: left;
+}
+
+/* Weiter Button */
+.mk-btn-weiter {
+  width: 100%;
+  background: #e2001a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+
+  &:hover:not(:disabled) {
+    background: #c0001a;
+  }
+
+  &:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
+}
+
+.mk-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Konto erstellen */
+.mk-konto-link {
+  color: #e2001a;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+
+  &:hover {
+    color: #c0001a;
+  }
+}
+
+/* ===== MEDIAKEY BRAND BAR ===== */
+.mk-brand-bar {
+  background: #fff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 400px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+
+  .mk-brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mk-brand-icon {
+    display: flex;
+    align-items: center;
+  }
+
+  .mk-brand-text {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #1a1a1a;
+    letter-spacing: 2px;
+
+    span {
+      color: #e2001a;
+    }
+  }
+}
+
+/* ===== FOOTER ===== */
+.mk-footer {
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+
+  .mk-footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.75rem;
+
+    a {
+      color: #555;
+      font-size: 0.8rem;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover { text-decoration: underline; }
+    }
+  }
+
+  .mk-footer-cookie {
+    color: #888;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    margin: 0 0 1rem;
+  }
+
+  .mk-footer-icon {
+    display: flex;
+    justify-content: center;
+  }
+}

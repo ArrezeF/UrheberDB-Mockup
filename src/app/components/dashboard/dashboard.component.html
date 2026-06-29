@@ -1,0 +1,191 @@
+﻿<!-- ===================== PAGE HEADER ===================== -->
+<div class="page-header">
+  <h1>Willkommen<span *ngIf="auth.isVerified()">, {{ auth.currentUser()?.name }}</span></h1>
+  <p>ORF Reporting Database – Hier sehen Sie wann und wo Ihre Werke im ORF ausgestrahlt wurden.</p>
+</div>
+
+<!-- ===================== SCHRITT 1: IDENTITÄTSNACHWEIS ===================== -->
+<div class="id-banner" *ngIf="!auth.isVerified()">
+  <div class="id-banner-left">
+    <i class="pi pi-shield"></i>
+    <div>
+      <strong>Identitätsnachweis erforderlich</strong>
+      <p>Bevor Sie fortfahren können, müssen Sie Ihre Identität nachweisen. Bitte wählen Sie eine Verifizierungsmethode:</p>
+    </div>
+  </div>
+  <div class="id-banner-actions">
+    <button pButton label="Mit ID-Austria" icon="pi pi-external-link" class="p-button-outlined" (click)="mitIdAustria()"></button>
+    <button pButton label="Reisepass / Personalausweis" icon="pi pi-id-card" class="p-button-danger" [routerLink]="['/identitaetsnachweis']"></button>
+  </div>
+</div>
+
+<!-- ===================== SCHRITT 2 & 3: NUR NACH IDENTITÄTSNACHWEIS ===================== -->
+<ng-container *ngIf="auth.isVerified()">
+
+  <!-- SCHRITT 2: KEIN ANTRAG → Hinweis -->
+  <ng-container *ngIf="!antragService.activePersonType()">
+    <div class="no-antrag-screen">
+      <div class="no-antrag-icon">
+        <i class="pi pi-file-edit"></i>
+      </div>
+      <h2>Kein Antrag vorhanden</h2>
+      <p>
+        Um Ihre Dashboard-Ansicht zu aktivieren, müssen Sie zuerst einen Antrag stellen.<br>
+        Klicken Sie dazu auf <strong>„Auskunft beantragen"</strong> im linken Menü.
+      </p>
+      <div class="no-antrag-hint">
+        <i class="pi pi-arrow-left"></i>
+        <span>Auskunft beantragen</span>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- SCHRITT 3: ANTRAG VORHANDEN → Dashboard -->
+  <ng-container *ngIf="antragService.activePersonType()">
+
+    <!-- Person-Banner: Natürliche Person -->
+    <div class="dashboard-person-banner nat" *ngIf="antragService.activePersonType() === 'natuerlich'">
+      <div class="dpb-icon"><i class="pi pi-user"></i></div>
+      <div class="dpb-content">
+        <div class="dpb-label">Natürliche Person</div>
+        <div class="dpb-name">{{ auth.currentUser()?.name }}</div>
+        <div class="dpb-sub">Persönliches Werknutzungs-Dashboard – Ausstrahlungen Ihrer eigenen Werke</div>
+      </div>
+    </div>
+
+    <!-- Person-Banner: Juristische Person -->
+    <div class="dashboard-person-banner jur" *ngIf="antragService.activePersonType() === 'juristisch'">
+      <div class="dpb-icon"><i class="pi pi-building"></i></div>
+      <div class="dpb-content">
+        <div class="dpb-label">Juristische Person</div>
+        <div class="dpb-name">{{ antragService.getSelectedAntrag()?.name }}</div>
+        <div class="dpb-sub">Unternehmens-Dashboard – Ausstrahlungen der Werke Ihrer Organisation</div>
+      </div>
+      <div class="dpb-selector" *ngIf="jurAntraegeOptionen.length > 1">
+        <label>Aktiver Antrag:</label>
+        <p-dropdown
+          [options]="jurAntraegeOptionen"
+          [ngModel]="antragService.selectedAntragId()"
+          (ngModelChange)="antragService.selectedAntragId.set($event)"
+          optionLabel="label"
+          optionValue="value"
+          [style]="{'min-width': '260px'}"
+        ></p-dropdown>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <span class="p-input-icon-left filter-search">
+        <i class="pi pi-search"></i>
+        <input pInputText [(ngModel)]="suchbegriff" placeholder="Titel suchen..." />
+      </span>
+      <p-dropdown
+        [options]="jahreOptionen"
+        [(ngModel)]="selectedJahr"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Jahr filtern"
+        class="filter-year"
+      ></p-dropdown>
+    </div>
+
+    <!-- Tabs: Fernsehen / Online / Radio -->
+    <div class="page-card" style="margin-top: 1rem">
+      <p-tabView>
+
+        <!-- FERNSEHEN -->
+        <p-tabPanel header="📺 Fernsehen">
+          <table class="grouped-table" *ngIf="tvGruppen.length > 0; else noTv">
+            <thead>
+              <tr>
+                <th style="width:2rem"></th>
+                <th>Produktionstitel</th>
+                <th>Ausstrahlungen</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let g of tvGruppen">
+                <tr class="group-row" (click)="toggleTv(g)">
+                  <td><i class="pi" [class.pi-chevron-right]="!expandedTv.has(g.titel)" [class.pi-chevron-down]="expandedTv.has(g.titel)"></i></td>
+                  <td><strong>{{ g.titel }}</strong></td>
+                  <td><span class="count-badge">{{ g.count }}×</span></td>
+                </tr>
+                <ng-container *ngIf="expandedTv.has(g.titel)">
+                  <tr class="detail-row" *ngFor="let p of g.ausstrahlung">
+                    <td></td>
+                    <td style="padding-left:1.5rem;font-size:0.85rem"><span class="sender-badge tv">{{ p.sender }}</span></td>
+                    <td style="font-size:0.85rem"><span class="detail-label">Datum:</span> {{ p.datum }} &nbsp;·&nbsp; <span class="detail-label">Uhrzeit:</span> {{ p.uhrzeit }}</td>
+                  </tr>
+                </ng-container>
+              </ng-container>
+            </tbody>
+          </table>
+          <ng-template #noTv><p class="no-results">Keine Fernsehausstrahlungen gefunden.</p></ng-template>
+        </p-tabPanel>
+
+        <!-- ONLINE -->
+        <p-tabPanel header="🌐 Online">
+          <table class="grouped-table" *ngIf="onlineGruppen.length > 0; else noOnline">
+            <thead>
+              <tr>
+                <th style="width:2rem"></th>
+                <th>Produktionstitel</th>
+                <th>Veröffentlichungen</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let g of onlineGruppen">
+                <tr class="group-row" (click)="toggleOnline(g)">
+                  <td><i class="pi" [class.pi-chevron-right]="!expandedOnline.has(g.titel)" [class.pi-chevron-down]="expandedOnline.has(g.titel)"></i></td>
+                  <td><strong>{{ g.titel }}</strong></td>
+                  <td><span class="count-badge">{{ g.count }}×</span></td>
+                </tr>
+                <ng-container *ngIf="expandedOnline.has(g.titel)">
+                  <tr class="detail-row" *ngFor="let p of g.ausstrahlung">
+                    <td></td>
+                    <td style="padding-left:1.5rem;font-size:0.85rem"><span class="sender-badge online">{{ p.programmname }}</span></td>
+                    <td style="font-size:0.85rem"><span class="detail-label">Start:</span> {{ p.startDatum }} &nbsp;·&nbsp; <span class="detail-label">Ende:</span> {{ p.endDatum }} &nbsp;·&nbsp; <span class="detail-label">Episode:</span> {{ p.episode }}</td>
+                  </tr>
+                </ng-container>
+              </ng-container>
+            </tbody>
+          </table>
+          <ng-template #noOnline><p class="no-results">Keine Online-Veröffentlichungen gefunden.</p></ng-template>
+        </p-tabPanel>
+
+        <!-- RADIO -->
+        <p-tabPanel header="📻 Radio">
+          <table class="grouped-table" *ngIf="radioGruppen.length > 0; else noRadio">
+            <thead>
+              <tr>
+                <th style="width:2rem"></th>
+                <th>Produktionstitel</th>
+                <th>Ausstrahlungen</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let g of radioGruppen">
+                <tr class="group-row" (click)="toggleRadio(g)">
+                  <td><i class="pi" [class.pi-chevron-right]="!expandedRadio.has(g.titel)" [class.pi-chevron-down]="expandedRadio.has(g.titel)"></i></td>
+                  <td><strong>{{ g.titel }}</strong></td>
+                  <td><span class="count-badge">{{ g.count }}×</span></td>
+                </tr>
+                <ng-container *ngIf="expandedRadio.has(g.titel)">
+                  <tr class="detail-row" *ngFor="let p of g.ausstrahlung">
+                    <td></td>
+                    <td style="padding-left:1.5rem;font-size:0.85rem"><span class="sender-badge radio">{{ p.sender }}</span></td>
+                    <td style="font-size:0.85rem"><span class="detail-label">Datum:</span> {{ p.datum }} &nbsp;·&nbsp; <span class="detail-label">Uhrzeit:</span> {{ p.uhrzeit }}</td>
+                  </tr>
+                </ng-container>
+              </ng-container>
+            </tbody>
+          </table>
+          <ng-template #noRadio><p class="no-results">Keine Radioausstrahlungen gefunden.</p></ng-template>
+        </p-tabPanel>
+
+      </p-tabView>
+    </div>
+
+  </ng-container>
+</ng-container>

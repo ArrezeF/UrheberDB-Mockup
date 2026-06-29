@@ -1,0 +1,197 @@
+<!-- Page Header -->
+<div class="page-header">
+  <h1>Willkommen, {{ auth.currentUser?.name }}</h1>
+  <p>ORF Reporting Database – Hier sehen Sie wann und wo Ihre Werke im ORF ausgestrahlt wurden.</p>
+</div>
+
+<!-- Identitätsnachweis Banner -->
+<div class="id-banner" *ngIf="!auth.isVerified">
+  <div class="id-banner-left">
+    <i class="pi pi-shield"></i>
+    <div>
+      <strong>Identitätsnachweis erforderlich</strong>
+      <p>Bevor Sie fortfahren können, müssen Sie Ihre Identität nachweisen. Bitte wählen Sie eine Verifizierungsmethode:</p>
+    </div>
+  </div>
+  <div class="id-banner-actions">
+    <button pButton label="Mit ID-Austria" icon="pi pi-external-link" class="p-button-outlined" (click)="mitIdAustria()"></button>
+    <button pButton label="Reisepass / Personalausweis" icon="pi pi-id-card" class="p-button-danger" [routerLink]="['/identitaetsnachweis']"></button>
+  </div>
+</div>
+
+<!-- Content hidden until verified -->
+<ng-container *ngIf="auth.isVerified">
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon red"><i class="pi pi-chart-bar"></i></div>
+    <div class="stat-info">
+      <div class="stat-value">{{ alleGesamt }}</div>
+      <div class="stat-label">Ausstrahlungen gesamt</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon blue"><i class="pi pi-desktop"></i></div>
+    <div class="stat-info">
+      <div class="stat-value">{{ tvGesamt }}</div>
+      <div class="stat-label">Fernsehen</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon green"><i class="pi pi-globe"></i></div>
+    <div class="stat-info">
+      <div class="stat-value">{{ onlineGesamt }}</div>
+      <div class="stat-label">Online (ORF ON)</div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon orange"><i class="pi pi-volume-up"></i></div>
+    <div class="stat-info">
+      <div class="stat-value">{{ radioGesamt }}</div>
+      <div class="stat-label">Radio</div>
+    </div>
+  </div>
+</div>
+
+<!-- Filter Bar -->
+<div class="filter-bar">
+  <span class="p-input-icon-left filter-search">
+    <i class="pi pi-search"></i>
+    <input pInputText [(ngModel)]="suchbegriff" placeholder="Titel suchen..." />
+  </span>
+  <p-dropdown
+    [options]="jahreOptionen"
+    [(ngModel)]="selectedJahr"
+    optionLabel="label"
+    optionValue="value"
+    placeholder="Jahr filtern"
+    class="filter-year"
+  ></p-dropdown>
+</div>
+
+<!-- Tabs: Fernsehen / Online / Radio -->
+<div class="page-card" style="margin-top: 1rem">
+  <p-tabView>
+
+    <!-- FERNSEHEN -->
+    <p-tabPanel header="📺 Fernsehen">
+      <table class="grouped-table" *ngIf="tvGruppen.length > 0; else noTv">
+        <thead>
+          <tr>
+            <th style="width:2rem"></th>
+            <th>Produktionstitel</th>
+            <th>Sender</th>
+            <th>Ausstrahlungen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let g of tvGruppen">
+            <tr class="group-row" (click)="toggleTv(g)">
+              <td><i class="pi" [class.pi-chevron-right]="!expandedTv.has(g.titel)" [class.pi-chevron-down]="expandedTv.has(g.titel)"></i></td>
+              <td><strong>{{ g.titel }}</strong></td>
+              <td><span class="sender-badge tv">{{ g.sender }}</span></td>
+              <td><span class="count-badge">{{ g.count }}×</span></td>
+            </tr>
+            <ng-container *ngIf="expandedTv.has(g.titel)">
+              <tr class="detail-row" *ngFor="let p of g.ausstrahlung">
+                <td></td>
+                <td colspan="1" style="padding-left:1.5rem">
+                  <span class="sender-badge tv">{{ p.sender }}</span>
+                </td>
+                <td style="font-size:0.85rem">
+                  <span class="detail-label">Datum:</span> {{ p.datum }}
+                </td>
+                <td style="font-size:0.85rem">
+                  <span class="detail-label">Uhrzeit:</span> {{ p.uhrzeit }} &nbsp;·&nbsp;
+                  <span class="detail-label">Dauer:</span> {{ p.dauer }}
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </table>
+      <ng-template #noTv><p class="no-results">Keine Fernsehausstrahlungen gefunden.</p></ng-template>
+    </p-tabPanel>
+
+    <!-- ONLINE -->
+    <p-tabPanel header="🌐 Online">
+      <table class="grouped-table" *ngIf="onlineGruppen.length > 0; else noOnline">
+        <thead>
+          <tr>
+            <th style="width:2rem"></th>
+            <th>Produktionstitel</th>
+            <th>Plattform</th>
+            <th>Veröffentlichungen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let g of onlineGruppen">
+            <tr class="group-row" (click)="toggleOnline(g)">
+              <td><i class="pi" [class.pi-chevron-right]="!expandedOnline.has(g.titel)" [class.pi-chevron-down]="expandedOnline.has(g.titel)"></i></td>
+              <td><strong>{{ g.titel }}</strong></td>
+              <td><span class="sender-badge online">{{ g.plattform }}</span></td>
+              <td><span class="count-badge">{{ g.count }}×</span></td>
+            </tr>
+            <ng-container *ngIf="expandedOnline.has(g.titel)">
+              <tr class="detail-row" *ngFor="let p of g.ausstrahlung">
+                <td></td>
+                <td colspan="1" style="padding-left:1.5rem">
+                  <span class="sender-badge online">{{ p.programmname }}</span>
+                </td>
+                <td style="font-size:0.85rem">
+                  <span class="detail-label">Start:</span> {{ p.startDatum }} &nbsp;·&nbsp;
+                  <span class="detail-label">Ende:</span> {{ p.endDatum }}
+                </td>
+                <td style="font-size:0.85rem">
+                  <span class="detail-label">Episode:</span> {{ p.episode }}
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </table>
+      <ng-template #noOnline><p class="no-results">Keine Online-Veröffentlichungen gefunden.</p></ng-template>
+    </p-tabPanel>
+
+    <!-- RADIO -->
+    <p-tabPanel header="📻 Radio">
+      <table class="grouped-table" *ngIf="radioGruppen.length > 0; else noRadio">
+        <thead>
+          <tr>
+            <th style="width:2rem"></th>
+            <th>Produktionstitel</th>
+            <th>Sender</th>
+            <th>Ausstrahlungen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let g of radioGruppen">
+            <tr class="group-row" (click)="toggleRadio(g)">
+              <td><i class="pi" [class.pi-chevron-right]="!expandedRadio.has(g.titel)" [class.pi-chevron-down]="expandedRadio.has(g.titel)"></i></td>
+              <td><strong>{{ g.titel }}</strong></td>
+              <td><span class="sender-badge radio">{{ g.sender }}</span></td>
+              <td><span class="count-badge">{{ g.count }}×</span></td>
+            </tr>
+            <ng-container *ngIf="expandedRadio.has(g.titel)">
+              <tr class="detail-row" *ngFor="let p of g.ausstrahlung">
+                <td></td>
+                <td colspan="1" style="padding-left:1.5rem">
+                  <span class="sender-badge radio">{{ p.sender }}</span>
+                </td>
+                <td style="font-size:0.85rem">
+                  <span class="detail-label">Datum:</span> {{ p.datum }}
+                </td>
+                <td style="font-size:0.85rem">
+                  <span class="detail-label">Uhrzeit:</span> {{ p.uhrzeit }} &nbsp;·&nbsp;
+                  <span class="detail-label">Dauer:</span> {{ p.dauer }}
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </table>
+      <ng-template #noRadio><p class="no-results">Keine Radioausstrahlungen gefunden.</p></ng-template>
+    </p-tabPanel>
+
+  </p-tabView>
+</div>
+</ng-container>

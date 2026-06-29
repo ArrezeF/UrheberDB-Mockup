@@ -1,0 +1,315 @@
+<!-- Page Header -->
+<div class="page-header">
+  <h1>Auskunft beantragen</h1>
+</div>
+
+<!-- Identitätsnachweis Banner -->
+<div class="id-banner" *ngIf="!auth.isVerified()">
+  <div class="id-banner-left">
+    <i class="pi pi-shield"></i>
+    <div>
+      <strong>Identitätsnachweis erforderlich</strong>
+      <p>Bevor Sie einen Antrag stellen können, müssen Sie Ihre Identität nachweisen. Bitte wählen Sie eine Verifizierungsmethode:</p>
+    </div>
+  </div>
+  <div class="id-banner-actions">
+    <button pButton label="Mit ID-Austria" icon="pi pi-external-link" class="p-button-outlined" (click)="mitIdAustria()"></button>
+    <button pButton label="Reisepass / Personalausweis" icon="pi pi-id-card" class="p-button-danger" [routerLink]="['/identitaetsnachweis']"></button>
+  </div>
+</div>
+
+<ng-container *ngIf="auth.isVerified()">
+
+<!-- ===================== STEP 1: Personenart wählen ===================== -->
+<div class="page-card" *ngIf="step === 1">
+  <h3 style="margin:0 0 0.5rem;font-size:1.05rem;color:#333">
+    <i class="pi pi-info-circle" style="color:#e2001a;margin-right:8px"></i>
+    Schritt 1 von 3 – Personenart wählen
+  </h3>
+  <p style="color:#888;font-size:0.85rem;margin:0 0 1.5rem">
+    Um Auskunft über die Nutzung Ihrer Werke zu erhalten, müssen Sie einen Antrag erstellen.
+    Bitte wählen Sie die Art der Person.
+  </p>
+
+  <div class="type-selector">
+
+    <!-- Natürliche Person -->
+    <div
+      class="type-card"
+      [class.selected]="selectedType === 'natuerlich'"
+      (click)="selectType('natuerlich')"
+    >
+      <i class="pi pi-user"></i>
+      <h3>Natürliche Person</h3>
+      <p>Einzelperson, z.B. ein Autor, Komponist, Fotograf oder sonstiger Urheber</p>
+    </div>
+
+    <!-- Juristische Person -->
+    <div
+      class="type-card"
+      [class.selected]="selectedType === 'juristisch'"
+      (click)="selectType('juristisch')"
+    >
+      <i class="pi pi-building"></i>
+      <h3>Juristische Person</h3>
+      <p>Unternehmen, Verein oder sonstige Organisation mit eigener Rechtspersönlichkeit</p>
+    </div>
+
+  </div>
+
+  <div style="display:flex;justify-content:flex-end;gap:1rem;margin-top:1.5rem">
+    <a routerLink="/dashboard">
+      <button pButton label="Abbrechen" class="p-button-text p-button-secondary"></button>
+    </a>
+    <button
+      pButton
+      label="Weiter"
+      icon="pi pi-arrow-right"
+      iconPos="right"
+      class="p-button-danger"
+      [disabled]="!selectedType"
+      (click)="weiter()"
+    ></button>
+  </div>
+</div>
+
+<!-- ===================== STEP 2a: Natürliche Person ===================== -->
+<div class="page-card" *ngIf="step === 2 && selectedType === 'natuerlich'">
+  <h3 style="margin:0 0 0.5rem;font-size:1.05rem;color:#333">
+    <i class="pi pi-user" style="color:#e2001a;margin-right:8px"></i>
+    Schritt 2 von 3 – Angaben zur natürlichen Person
+  </h3>
+  <p style="color:#888;font-size:0.85rem;margin:0 0 1.5rem">Bitte füllen Sie alle Pflichtfelder (*) aus.</p>
+
+  <!-- ---- HONORARNUMMER SUCHE ---- -->
+  <div class="personalnummer-box">
+    <div class="form-section-title">Honorarnummer</div>
+    <p style="font-size:0.85rem;color:#666;margin:0 0 1rem">
+      Falls Sie eine Honorarnummer haben, können Sie diese eingeben. Die zugehörigen Daten werden automatisch befüllt.
+    </p>
+
+    <!-- Eingabe + Suchen -->
+    <div *ngIf="personalnummerStatus === 'idle' || personalnummerStatus === 'searching' || personalnummerStatus === 'not-found'">
+      <div class="pnr-input-row">
+        <div style="flex:1">
+          <input
+            pInputText
+            [(ngModel)]="personalnummer"
+            placeholder="z.B. H12345"
+            [class.ng-invalid]="personalnummerError"
+            [class.ng-dirty]="personalnummerError"
+            (input)="personalnummerError = false"
+            (keyup.enter)="suchePersonalnummer()"
+            style="width:100%"
+          />
+          <small class="p-error" *ngIf="personalnummerError">Bitte geben Sie eine Honorarnummer ein.</small>
+        </div>
+        <button
+          pButton
+          label="Suchen"
+          icon="pi pi-search"
+          class="p-button-danger"
+          (click)="suchePersonalnummer()"
+          [disabled]="personalnummerStatus === 'searching'"
+        ></button>
+        <button
+          pButton
+          label="Ohne Honorarnummer fortfahren"
+          class="p-button-text p-button-secondary"
+          icon="pi pi-arrow-right"
+          iconPos="right"
+          (click)="ohnePersonalnummer()"
+        ></button>
+      </div>
+
+      <!-- Nicht gefunden Hinweis -->
+      <div class="pnr-not-found" *ngIf="personalnummerStatus === 'not-found'">
+        <i class="pi pi-exclamation-triangle"></i>
+        Honorarnummer <strong>{{ personalnummer }}</strong> wurde nicht gefunden. Bitte füllen Sie die Adresse manuell aus.
+      </div>
+    </div>
+
+    <!-- Gefunden: Person anzeigen -->
+    <div class="pnr-found" *ngIf="personalnummerStatus === 'found'">
+      <i class="pi pi-check-circle"></i>
+      <div>
+        <strong>Honorarnummer {{ personalnummer }} gefunden</strong><br>
+        <span>{{ natForm.value.strasse }}, {{ natForm.value.plz }} {{ natForm.value.ort }}</span>
+      </div>
+      <button pButton icon="pi pi-times" class="p-button-text p-button-sm" pTooltip="Zurücksetzen" (click)="resetPersonalnummer()"></button>
+    </div>
+
+    <!-- Übersprungen Hinweis -->
+    <div class="pnr-skipped" *ngIf="personalnummerStatus === 'skipped'">
+      <i class="pi pi-info-circle"></i>
+      Keine Honorarnummer angegeben. Bitte füllen Sie die Adresse manuell aus.
+      <button pButton label="Doch Honorarnummer eingeben" class="p-button-text p-button-sm" style="margin-left:auto" (click)="resetPersonalnummer()"></button>
+    </div>
+  </div>
+
+  <p-divider></p-divider>
+
+  <form [formGroup]="natForm">
+
+    <!-- Adresse – nur sichtbar wenn nicht gefunden ODER übersprungen (nicht wenn gefunden) -->
+    <ng-container *ngIf="showAdressfelder">
+      <div class="form-section-title">Adresse</div>
+      <div class="p-fluid formgrid grid">
+        <div class="field col-12">
+          <label>Straße & Hausnummer *</label>
+          <input pInputText formControlName="strasse" placeholder="z.B. Musterstraße 1" [readonly]="personFound" />
+          <small class="p-error" *ngIf="isInvalid('strasse')">Straße ist erforderlich</small>
+        </div>
+        <div class="field col-12 md:col-4">
+          <label>PLZ *</label>
+          <input pInputText formControlName="plz" placeholder="z.B. 1010" [readonly]="personFound" />
+          <small class="p-error" *ngIf="isInvalid('plz')">Gültige PLZ eingeben</small>
+        </div>
+        <div class="field col-12 md:col-4">
+          <label>Stadt *</label>
+          <input pInputText formControlName="ort" placeholder="z.B. Wien" [readonly]="personFound" />
+          <small class="p-error" *ngIf="isInvalid('ort')">Stadt ist erforderlich</small>
+        </div>
+        <div class="field col-12 md:col-4">
+          <label>Land *</label>
+          <p-dropdown formControlName="land" [options]="laender" optionLabel="label" optionValue="value" [disabled]="personFound"></p-dropdown>
+        </div>
+        <div class="field col-12 md:col-4">
+          <label>Telefonnummer *</label>
+          <input pInputText formControlName="telefon" placeholder="z.B. +43 1 ..." />
+          <small class="p-error" *ngIf="isInvalid('telefon')">Telefonnummer ist erforderlich</small>
+        </div>
+      </div>
+      <p-divider></p-divider>
+    </ng-container>
+
+  </form>
+
+  <div style="display:flex;justify-content:space-between;margin-top:1.5rem">
+    <button pButton label="Zurück" icon="pi pi-arrow-left" class="p-button-text" (click)="zurueck()"></button>
+    <button
+      pButton label="Weiter" icon="pi pi-arrow-right" iconPos="right" class="p-button-danger"
+      (click)="weiter()"
+      [disabled]="personalnummerStatus === 'idle' || personalnummerStatus === 'searching'"
+    ></button>
+  </div>
+</div>
+
+<!-- ===================== STEP 2b: Juristische Person ===================== -->
+<div class="page-card" *ngIf="step === 2 && selectedType === 'juristisch'">
+  <h3 style="margin:0 0 0.5rem;font-size:1.05rem;color:#333">
+    <i class="pi pi-building" style="color:#e2001a;margin-right:8px"></i>
+    Schritt 2 von 3 – Angaben zur juristischen Person
+  </h3>
+  <p style="color:#888;font-size:0.85rem;margin:0 0 1.5rem">Bitte füllen Sie alle Pflichtfelder (*) aus.</p>
+
+  <form [formGroup]="jurForm">
+
+    <div class="form-section-title">Unternehmensdaten</div>
+    <div class="p-fluid formgrid grid">
+      <div class="field col-12 md:col-6">
+        <label>Firmenname *</label>
+        <input pInputText formControlName="firmenname" placeholder="z.B. Muster GmbH" />
+        <small class="p-error" *ngIf="isInvalid('firmenname')">Firmenname ist erforderlich</small>
+      </div>
+      <div class="field col-12 md:col-6">
+        <label>Telefonnummer *</label>
+        <input pInputText formControlName="telefon" placeholder="+43 1 ..." />
+        <small class="p-error" *ngIf="isInvalid('telefon')">Telefonnummer ist erforderlich</small>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <div class="form-section-title">Dokumente</div>
+    <div class="p-fluid formgrid grid">
+
+      <!-- Firmenbuchauszug -->
+      <div class="field col-12 md:col-6">
+        <label>Firmenbuchauszug *</label>
+        <div class="upload-area" (click)="firmenbuchInput.click()" [class.upload-has-file]="firmenbuchFile">
+          <input #firmenbuchInput type="file" accept=".pdf,.jpg,.jpeg,.png" style="display:none"
+                 (change)="onFirmenbuchChange($event)" />
+          <ng-container *ngIf="!firmenbuchFile">
+            <i class="pi pi-upload" style="font-size:1.5rem;color:#aaa;display:block;margin-bottom:0.4rem"></i>
+            <span style="font-size:0.85rem;color:#888">PDF, JPG oder PNG hochladen</span>
+          </ng-container>
+          <ng-container *ngIf="firmenbuchFile">
+            <i class="pi pi-file" style="font-size:1.5rem;color:#e2001a;display:block;margin-bottom:0.4rem"></i>
+            <span style="font-size:0.85rem;color:#333">{{ firmenbuchFile.name }}</span>
+            <button pButton icon="pi pi-times" class="p-button-text p-button-sm p-button-danger" style="margin-top:0.4rem"
+                    (click)="firmenbuchFile = null; $event.stopPropagation()"></button>
+          </ng-container>
+        </div>
+        <small class="p-error" *ngIf="jurSubmitted && !firmenbuchFile">Firmenbuchauszug ist erforderlich</small>
+      </div>
+
+      <!-- Vollmacht -->
+      <div class="field col-12 md:col-6">
+        <label>Vollmacht *</label>
+        <div class="upload-area" (click)="vollmachtInput.click()" [class.upload-has-file]="vollmachtFile">
+          <input #vollmachtInput type="file" accept=".pdf,.jpg,.jpeg,.png" style="display:none"
+                 (change)="onVollmachtChange($event)" />
+          <ng-container *ngIf="!vollmachtFile">
+            <i class="pi pi-upload" style="font-size:1.5rem;color:#aaa;display:block;margin-bottom:0.4rem"></i>
+            <span style="font-size:0.85rem;color:#888">PDF, JPG oder PNG hochladen</span>
+          </ng-container>
+          <ng-container *ngIf="vollmachtFile">
+            <i class="pi pi-file" style="font-size:1.5rem;color:#e2001a;display:block;margin-bottom:0.4rem"></i>
+            <span style="font-size:0.85rem;color:#333">{{ vollmachtFile.name }}</span>
+            <button pButton icon="pi pi-times" class="p-button-text p-button-sm p-button-danger" style="margin-top:0.4rem"
+                    (click)="vollmachtFile = null; $event.stopPropagation()"></button>
+          </ng-container>
+        </div>
+        <small class="p-error" *ngIf="jurSubmitted && !vollmachtFile">Vollmacht ist erforderlich</small>
+      </div>
+
+    </div>
+
+  </form>
+
+  <div style="display:flex;justify-content:space-between;margin-top:1.5rem">
+    <button pButton label="Zurück" icon="pi pi-arrow-left" class="p-button-text" (click)="zurueck()"></button>
+    <button pButton label="Weiter" icon="pi pi-arrow-right" iconPos="right" class="p-button-danger" (click)="weiter()"></button>
+  </div>
+</div>
+
+<!-- ===================== STEP 3: Bestätigung ===================== -->
+<div class="page-card" *ngIf="step === 3" style="text-align:center;padding:3rem 2rem">
+  <i class="pi pi-check-circle" style="font-size:4rem;color:#2f9e44;display:block;margin-bottom:1rem"></i>
+  <h2 style="margin:0 0 0.5rem;color:#1a1a1a">Antrag bereit zur Einreichung</h2>
+  <p style="color:#666;max-width:500px;margin:0 auto 2rem">
+    Ihr Antrag wurde vollständig ausgefüllt. Klicken Sie auf <strong>Einreichen</strong>,
+    um den Antrag verbindlich zu übermitteln.
+  </p>
+
+  <div style="background:#f8f9fa;border-radius:8px;padding:1.5rem;max-width:460px;margin:0 auto 2rem;text-align:left;border:1px solid #e0e0e0">
+    <div style="display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid #eee">
+      <span style="color:#888;font-size:0.85rem">Personenart</span>
+      <span style="font-weight:600;font-size:0.85rem">
+        {{ selectedType === 'natuerlich' ? 'Natürliche Person' : 'Juristische Person' }}
+      </span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid #eee" *ngIf="selectedType === 'natuerlich'">
+      <span style="color:#888;font-size:0.85rem">Name</span>
+      <span style="font-size:0.85rem">{{ natForm.value.vorname }} {{ natForm.value.nachname }}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid #eee" *ngIf="selectedType === 'juristisch'">
+      <span style="color:#888;font-size:0.85rem">Firma</span>
+      <span style="font-size:0.85rem">{{ jurForm.value.firmenname }}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:0.5rem 0">
+      <span style="color:#888;font-size:0.85rem">E-Mail</span>
+      <span style="font-size:0.85rem">
+        {{ selectedType === 'natuerlich' ? natForm.value.email : jurForm.value.email }}
+      </span>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:1rem;justify-content:center">
+    <button pButton label="Zurück bearbeiten" icon="pi pi-arrow-left" class="p-button-text" (click)="zurueck()"></button>
+    <button pButton label="Antrag einreichen" icon="pi pi-send" class="p-button-danger" (click)="submitAntrag()"></button>
+  </div>
+</div>
+
+</ng-container>

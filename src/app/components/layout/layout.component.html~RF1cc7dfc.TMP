@@ -1,0 +1,88 @@
+<div class="layout-wrapper">
+
+  <!-- ===== TOP BAR ===== -->
+  <header class="layout-topbar">
+    <div class="topbar-brand">
+      <div class="orf-logo">
+        <span class="logo-box">ORF</span>
+        <span class="logo-fueralle">FÜR ALLE</span>
+      </div>
+      <span class="topbar-title">ORF REPORTING DATABASE</span>
+    </div>
+    <nav class="topbar-nav">
+      <a routerLink="/dashboard" routerLinkActive="active">ORF Reporting Database</a>
+      <a routerLink="/faq">FAQs</a>
+      <span style="color:#ccc">|</span>
+      <span style="font-size:0.85rem;color:#555;font-weight:500">
+        {{ auth.currentUser?.name }}
+      </span>
+      <button
+        pButton
+        icon="pi pi-sign-out"
+        label="Logout"
+        class="p-button-text p-button-sm"
+        (click)="logout()"
+        style="color:#e2001a"
+      ></button>
+    </nav>
+  </header>
+
+  <div class="layout-body">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="layout-sidebar">
+      <div class="sidebar-menu">
+        <span class="menu-header">Hauptmenü</span>
+        <a routerLink="/dashboard" routerLinkActive="active">
+          <i class="pi pi-home"></i> Dashboard
+        </a>
+        <a routerLink="/antraege" routerLinkActive="active">
+          <i class="pi pi-file"></i> Meine Anträge
+        </a>
+        <a routerLink="/antrag/neu" routerLinkActive="active">
+          <i class="pi pi-plus-circle"></i> Neuer Antrag
+        </a>
+
+
+      </div>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <main class="layout-main">
+      <router-outlet></router-outlet>
+    </main>
+
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="layout-footer">
+    <div class="footer-brand">
+      <div class="orf-logo-footer">
+        <span class="logo-box">ORF</span>
+        <span class="logo-fueralle">FÜR ALLE</span>
+      </div>
+      <p>Der ORF<br>Hugo-Portisch-Gasse 1<br>1136 Wien</p>
+      <p style="margin-top:0.75rem">Tochtergesellschaften</p>
+    </div>
+    <div class="footer-col">
+      <h4>ORF</h4>
+      <a>Werben im ORF</a>
+      <a>Contentsales</a>
+      <a>Datenschutz</a>
+      <a>Impressum</a>
+      <a>Karriere</a>
+    </div>
+    <div class="footer-col">
+      <h4>Links</h4>
+      <a>ORF Shop</a>
+      <a>Presse</a>
+      <a>ORF Stars</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <a>Kontakt</a>
+      <a>English</a>
+    </div>
+  </footer>
+
+</div>

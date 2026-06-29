@@ -1,0 +1,110 @@
+// No component-level styles
+
+.id-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: #fffbea;
+  border: 1px solid #f5c518;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+
+  .id-banner-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+
+    i { font-size: 1.4rem; color: #e2001a; margin-top: 2px; flex-shrink: 0; }
+    strong { display: block; color: #e2001a; font-size: 0.95rem; margin-bottom: 0.25rem; }
+    p { margin: 0; font-size: 0.85rem; color: #555; }
+  }
+
+  .id-banner-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+}
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+
+  .filter-search {
+    flex: 1;
+    input { width: 100%; }
+  }
+
+  .filter-year {
+    width: 160px;
+  }
+}
+
+.grouped-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+
+  thead tr {
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  th {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+    font-weight: 600;
+  }
+
+  .group-row {
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.15s;
+
+    &:hover { background: #fafafa; }
+
+    td { padding: 0.75rem; vertical-align: middle; }
+
+    i { color: #aaa; font-size: 0.75rem; }
+  }
+
+  .detail-row {
+    background: #f8f9fa;
+    border-bottom: 1px solid #f0f0f0;
+
+    td { padding: 0.45rem 0.75rem; color: #555; vertical-align: middle; }
+  }
+}
+
+.detail-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #aaa;
+  margin-right: 3px;
+}
+
+.count-badge {
+  display: inline-block;
+  background: #f0f0f0;
+  color: #555;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 2px 10px;
+}
+
+.no-results {
+  text-align: center;
+  color: #aaa;
+  padding: 2rem;
+  font-size: 0.9rem;
+}

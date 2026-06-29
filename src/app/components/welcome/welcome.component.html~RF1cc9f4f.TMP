@@ -1,0 +1,130 @@
+<div class="welcome-page">
+
+  <!-- ===== TOP BAR ===== -->
+  <header class="layout-topbar">
+    <div class="topbar-brand">
+      <div class="orf-logo">
+        <span class="logo-box">ORF</span>
+        <span class="logo-fueralle">FÜR ALLE</span>
+      </div>
+      <span class="topbar-title">ORF REPORTING DATABASE</span>
+    </div>
+    <nav class="topbar-nav">
+      <a routerLink="/welcome">ORF Reporting Database</a>
+      <a routerLink="/faq">FAQs</a>
+      <a routerLink="/login" class="btn-nav-login">Anmelden</a>
+    </nav>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="welcome-hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="pi pi-tv"></i> ORF Reporting Database
+      </div>
+      <h1>Willkommen bei der<br><span>ORF Reporting Database</span></h1>
+      <p>
+        Die zentrale Plattform für Urheber*innen, um Auskunft über die Nutzung
+        ihrer Werke zu erhalten – wann und wo wurden Ihre Werke im ORF ausgestrahlt.
+      </p>
+      <div class="hero-actions">
+        <a routerLink="/login">
+          <button pButton
+            label="Jetzt anmelden"
+            icon="pi pi-sign-in"
+            class="p-button-danger hero-btn-primary">
+          </button>
+        </a>
+        <a routerLink="/faq">
+          <button pButton
+            label="Mehr erfahren"
+            icon="pi pi-info-circle"
+            class="p-button-outlined hero-btn-secondary">
+          </button>
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-mock">
+        <div class="mock-topbar"></div>
+        <div class="mock-sidebar">
+          <div class="mock-item active"></div>
+          <div class="mock-item"></div>
+          <div class="mock-item"></div>
+          <div class="mock-item"></div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-stat-row">
+            <div class="mock-stat red"></div>
+            <div class="mock-stat blue"></div>
+            <div class="mock-stat green"></div>
+          </div>
+          <div class="mock-table-row"></div>
+          <div class="mock-table-row short"></div>
+          <div class="mock-table-row"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section class="welcome-steps">
+    <h2>So einfach geht's</h2>
+    <div class="steps-row">
+      <div class="step-item">
+        <div class="step-number">1</div>
+        <h4>Anmelden</h4>
+        <p>Mit Ihrem ORF MediaKey sicher einloggen</p>
+      </div>
+      <div class="step-arrow"><i class="pi pi-arrow-right"></i></div>
+      <div class="step-item">
+        <div class="step-number">2</div>
+        <h4>Antrag erstellen</h4>
+        <p>Als natürliche oder juristische Person registrieren</p>
+      </div>
+      <div class="step-arrow"><i class="pi pi-arrow-right"></i></div>
+      <div class="step-item">
+        <div class="step-number">3</div>
+        <h4>Werke abrufen</h4>
+        <p>Ausstrahlungsdaten Ihrer Werke im ORF einsehen</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem">
+      <a routerLink="/login">
+        <button pButton label="Jetzt starten" icon="pi pi-arrow-right" iconPos="right" class="p-button-danger" style="padding:0.75rem 2rem;font-size:1rem"></button>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="layout-footer">
+    <div class="footer-brand">
+      <div class="orf-logo-footer">
+        <span class="logo-box">ORF</span>
+        <span class="logo-fueralle">FÜR ALLE</span>
+      </div>
+      <p>Der ORF<br>Hugo-Portisch-Gasse 1<br>1136 Wien</p>
+      <p style="margin-top:0.75rem">Tochtergesellschaften</p>
+    </div>
+    <div class="footer-col">
+      <h4>ORF</h4>
+      <a>Werben im ORF</a>
+      <a>Contentsales</a>
+      <a>Datenschutz</a>
+      <a>Impressum</a>
+      <a>Karriere</a>
+    </div>
+    <div class="footer-col">
+      <h4>Links</h4>
+      <a>ORF Shop</a>
+      <a>Presse</a>
+      <a>ORF Stars</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <a>Kontakt</a>
+      <a>English</a>
+    </div>
+  </footer>
+
+</div>

@@ -1,0 +1,78 @@
+<div class="login-page">
+
+  <!-- Top Bar -->
+  <header class="layout-topbar">
+    <div class="topbar-brand">
+      <div class="orf-logo">
+        <span class="logo-box">ORF</span>
+        <span class="logo-fueralle">FÜR ALLE</span>
+      </div>
+      <span class="topbar-title">ORF REPORTING DATABASE</span>
+    </div>
+    <nav class="topbar-nav">
+      <a class="active">Login ORF Reporting Database</a>
+      <a>FAQs</a>
+    </nav>
+  </header>
+
+  <!-- Login Content -->
+  <main class="login-content">
+    <div class="login-card">
+      <h2>Anmelden</h2>
+      <p class="subtitle">
+        Melden Sie sich mit Ihrer MediaKey an, um Auskunft über die Nutzung
+        Ihrer Werke im ORF zu erhalten.
+      </p>
+
+      <!-- MediaKey Logo -->
+      <div class="mediakey-logo">
+        <div class="mk-icon">M</div>
+        <div class="mk-text"><span>MEDIA</span>KEY</div>
+      </div>
+
+      <!-- Login Button -->
+      <button
+        class="btn-mediakey"
+        (click)="loginWithMediaKey()"
+      >
+        Anmelden mit MediaKey
+      </button>
+
+      <p style="font-size:0.78rem;color:#aaa;text-align:center;margin-top:1.5rem;margin-bottom:0">
+        Nur für registrierte Urheber*innen. Bei Fragen wenden Sie sich an den ORF-Helpdesk.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="layout-footer">
+    <div class="footer-brand">
+      <div class="orf-logo-footer">
+        <span class="logo-box">ORF</span>
+        <span class="logo-fueralle">FÜR ALLE</span>
+      </div>
+      <p>Der ORF<br>Hugo-Portisch-Gasse 1<br>1136 Wien</p>
+      <p style="margin-top:0.75rem">Tochtergesellschaften</p>
+    </div>
+    <div class="footer-col">
+      <h4>ORF</h4>
+      <a>Werben im ORF</a>
+      <a>Contentsales</a>
+      <a>Datenschutz</a>
+      <a>Impressum</a>
+      <a>Karriere</a>
+    </div>
+    <div class="footer-col">
+      <h4>Links</h4>
+      <a>ORF Shop</a>
+      <a>Presse</a>
+      <a>ORF Stars</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <a>Kontakt</a>
+      <a>English</a>
+    </div>
+  </footer>
+
+</div>
